@@ -3,6 +3,8 @@ const db = require('../db-config');
 module.exports = {
     registerUser,
     getUserBy,
+    getAll,
+    removeUser
 }
 
 function registerUser(user) {
@@ -14,4 +16,12 @@ function registerUser(user) {
 
 function getUserBy(filter) {
     return db('users').where(filter).first();
+}
+
+function getAll() {
+    return db('users');
+}
+
+function removeUser(id) {
+    return db('users').where({ id }).del();
 }

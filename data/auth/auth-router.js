@@ -59,6 +59,26 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.delete('/users/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await db.removeUser(id);
+
+        if(deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+    } catch(error) {
+        res.status(500).json({
+            message: 'Server error while deleting user'
+        });
+    }
+});
+
 function generateToken(user) {
     const payload = {
         UserId: user.id,
